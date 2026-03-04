@@ -30,17 +30,28 @@ public class ChatService {
         """;
 
     public ChatService(AgentCoreMemory agentCoreMemory,
+        VectorStore kbVectorStore,
+        WebGroundingTools webGroundingTools,
+        ContextAdvisor contextAdvisor,
+		ChatClient.Builder chatClientBuilder) {
         ChatClient.Builder chatClientBuilder) {
 
         List<Advisor> advisors = new ArrayList<>();
+        if (webGroundingTools != null) {
+            localTolls.add(webGroundingTools;
+                logger.info("Web Grounding enabled...");
+            )
+        }
 
         // Memory (STM + LTM)
         advisors.addAll(agentCoreMemory.advisors);
+        advisors.add(contextAdvisor);
         logger.info("Memory enabled: {} advisors", agentCoreMemory.advisors.size());
 
         this.chatClient = chatClientBuilder
             .defaultSystem(SYSTEM_PROMPT)
             .defaultAdvisors(advisors.toArray(new Advisor[0]))
+            .detaultTools(localTools.toArray())
             .build();
     }
 
