@@ -13,11 +13,23 @@ public class ChatService {
 
     public ChatService(ChatClient.Builder chatClientBuilder) {
         this.chatClient = chatClientBuilder
+            .defaultSystem(SYSTEM_PROMPT)
             .build();
     }
 
     @AgentCoreInvocation
     public Flux<String> chat(ChatRequest request) {
-        return chatClient.prompt().user(request.prompt()).stream().content();
+        return chatClient.prompt()
+        .user(request.prompt())
+        .stream()
+        .content();
     }
+
+
+        private static final String SYSTEM_PROMPT = """
+        You are a helpful AI agent for travel and expense management.
+        Be friendly, helpful, and concise in your responses.
+        """;
 }
+
+
