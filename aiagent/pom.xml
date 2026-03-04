@@ -47,6 +47,14 @@
                 <scope>import</scope>
             </dependency>
 
+			        <!-- AgentCore Memory dependencies -->
+        <dependency>
+            <groupId>org.springaicommunity</groupId>
+            <artifactId>spring-ai-agentcore-memory</artifactId>
+        </dependency>
+
+		
+
         </dependencies>
     </dependencyManagement>
 
